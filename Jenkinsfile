@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-def dbport = ""
 def dburl = ""
 def repourl = ""
 def dbuser = ""
@@ -26,7 +25,6 @@ pipeline {
                     dir('infrastructure') {
                         sh 'terraform init'
                         sh 'terraform apply --auto-approve'
-                        dbport = sh(script : 'terraform output DB_PORT', returnStdout : true).trim()
                         dburl  = sh(script : 'terraform output DB_HOST', returnStdout : true).trim()
                         dbuser = sh(script : 'terraform output DB_USERNAME', returnStdout : true).trim()
                         dbpass = sh(script : 'terraform output DB_PASSWORD', returnStdout : true).trim()
@@ -60,7 +58,6 @@ pipeline {
             environment{
                 IMAGE_URL = "${imageurl}"
                 DATABASE_HOST = "${dburl}"
-                DATABASE_PORT = "${dbport}"
                 DATABASE_USER = "${dbuser}"
                 DATABASE_PASSWORD = "${dbpass}"
                 DATABASE_NAME = "${dbname}"
