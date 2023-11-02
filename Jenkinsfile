@@ -69,7 +69,7 @@ pipeline {
                         echo env.IMAGE_URL
                         echo env.DATABASE_HOST
                         echo env.DATABASE_PORT
-                        sh "aws eks update-kubeconfig --name ${clustername}"
+                        sh "aws eks update-kubeconfig --name mario-cluster"
                         sh 'envsubst < deployment.yaml > deploysub.yaml'
                         sh 'kubectl apply -f deploysub.yaml'
                         sh 'kubectl apply -f service.yaml'
