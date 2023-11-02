@@ -20,10 +20,10 @@ pipeline {
         AWS_DEFAULT_REGION = "eu-north-1"
     }
     stages {
-        stage("Create Infrastucture") {
+        stage("Create Infrastructure") {
             steps {
                 script {
-                    dir('infrastucture') {
+                    dir('infrastructure') {
                         sh 'terraform init'
                         sh 'terraform apply --auto-approve'
                         dbport = sh(script : 'terraform output DB_PORT', returnStdout : true).trim()
@@ -102,11 +102,11 @@ pipeline {
         }
         stage('Destroy infrastructure') {
             input {
-                message "Destroy Infrastructure?"
+                message "Destroy infrastructure?"
                 ok "Yes"
             }
             steps{
-                dir('infrastucture'){
+                dir('infrastructure'){
                     sh "aws s3 rm s3://${bucketname} --recursive"
                     sh 'terraform destroy --auto-approve'
                 }
