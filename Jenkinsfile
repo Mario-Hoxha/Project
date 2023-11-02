@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-def dburl = ""
 def repourl = ""
 def dbuser = ""
 def dbpass = ""
@@ -25,7 +24,6 @@ pipeline {
                     dir('infrastructure') {
                         sh 'terraform init'
                         sh 'terraform apply --auto-approve'
-                        dburl  = sh(script : 'terraform output DB_HOST', returnStdout : true).trim()
                         dbuser = sh(script : 'terraform output DB_USERNAME', returnStdout : true).trim()
                         dbpass = sh(script : 'terraform output DB_PASSWORD', returnStdout : true).trim()
                         repourl = sh(script : 'terraform output Repo_url', returnStdout : true).trim()
@@ -57,7 +55,6 @@ pipeline {
         stage("Deploy to EKS") {
             environment{
                 IMAGE_URL = "${imageurl}"
-                DATABASE_HOST = "${dburl}"
                 DATABASE_USER = "${dbuser}"
                 DATABASE_PASSWORD = "${dbpass}"
                 DATABASE_NAME = "${dbname}"
