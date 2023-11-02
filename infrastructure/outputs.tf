@@ -15,7 +15,7 @@ output "Website_url" {
 }
 
 output "S3_Bucket_Name" {
-  value = module.s3_bucket
+  value = module.s3_bucket.bucket-name
 }
 
 output "Repo_url" {

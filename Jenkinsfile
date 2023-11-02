@@ -31,8 +31,8 @@ pipeline {
                         dbuser = sh(script : 'terraform output DB_USERNAME', returnStdout : true).trim()
                         dbpass = sh(script : 'terraform output DB_PASSWORD', returnStdout : true).trim()
                         repourl = sh(script : 'terraform output Repo_url', returnStdout : true).trim()
-                        bucketname = sh(script : 'terraform output WEB_CLIENT_BUCKET_NAME', returnStdout : true).trim()
-                        clustername = sh(script : 'terraform output EKS_CLUSTER_NAME', returnStdout : true).trim()
+                        bucketname = sh(script : 'terraform output S3_Bucket_Name', returnStdout : true).trim()
+                        clustername = sh(script : 'terraform output Eks_Name', returnStdout : true).trim()
                         dbname = sh(script: 'terraform output DB_NAME', returnStdout : true).trim()
 
 
