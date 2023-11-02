@@ -70,9 +70,9 @@ pipeline {
                         echo env.DATABASE_HOST
                         echo env.DATABASE_PORT
                         sh "aws eks update-kubeconfig --name mario-cluster"
-                        sh 'envsubst < deployment.yaml > deploysub.yaml'
-                        sh 'kubectl apply -f deploysub.yaml'
-                        sh 'kubectl apply -f service.yaml'
+                        sh 'envsubst < deployment.yml > deploysub.yml'
+                        sh 'kubectl apply -f deploysub.yml'
+                        sh 'kubectl apply -f service.yml'
                         apiurl = sh(script: 'kubectl get service api -o jsonpath={.status.loadBalancer.ingress[0].hostname}' , returnStdout : true ).trim()
                         
                     }
