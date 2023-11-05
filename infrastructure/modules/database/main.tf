@@ -4,7 +4,7 @@ resource "aws_db_subnet_group" "dbsubnet" {
 }
 
 resource "aws_db_parameter_group" "pam-db" {
-  family = "postgres13"
+  family = "postgres15"
 }
 
 resource "aws_security_group" "sec-grup" {
@@ -37,12 +37,13 @@ resource "aws_security_group" "sec-grup" {
 
 resource "aws_db_instance" "db-instance" {
   skip_final_snapshot = true
+  publicly_accessible = true
   instance_class = "db.t3.micro"
   allocated_storage = 20
   db_name = var.DbName
   engine = var.DbEngine
   identifier = "${var.app_name}-db-instance"
-  engine_version = "13"
+  engine_version = "15"
   db_subnet_group_name = aws_db_subnet_group.dbsubnet.name
   parameter_group_name = aws_db_parameter_group.pam-db.name
   vpc_security_group_ids = [aws_security_group.sec-grup.id]

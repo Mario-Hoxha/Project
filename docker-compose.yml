@@ -16,8 +16,8 @@ services:
     depends_on:
       - postgres
     restart: always
-    networks:
-      - mynetwork
+    links:
+      - postgres
 
   web_client:
     build: ./web_client
@@ -29,21 +29,10 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:15
     environment:
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
       POSTGRES_DB: $DATABASE_NAME
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/postgresql/data
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
-
-volumes:
-  postgres_data:
